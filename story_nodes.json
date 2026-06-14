@@ -1,0 +1,634 @@
+{
+  "meta": {
+    "title": "孟买名利场",
+    "titleEn": "Mumbai High Society",
+    "version": "0.2.0",
+    "playerId": "kavya",
+    "startNode": "prologue_start",
+    "demoScope": "prologue + chapter1 + vic_route + ch2_placeholder"
+  },
+  "characters": {
+    "kavya": { "name": "Kavya", "role": "player" },
+    "vic": { "name": "Vikram", "displayName": "Vic" },
+    "rupesh": { "name": "Rupesh", "alias": "Zaker" },
+    "ananda": { "name": "Ananda" },
+    "kabir": { "name": "Kabir" },
+    "praya": { "name": "Praya" },
+    "assistant": { "name": "助理" }
+  },
+  "variables": {
+    "vic_affection": 0,
+    "rupesh_affection": 0,
+    "ananda_affection": 0,
+    "kabir_affection": 0
+  },
+  "defaultFlags": {
+    "route_focus": null,
+    "mainline_checkpoint": "prologue_start",
+    "ch1_blindbox_signed": false,
+    "ch1_stood_with_vic": false,
+    "ch1_helped_rupesh": false,
+    "vic_route_1_completed": false,
+    "vic_betrayed": false,
+    "rupesh_betrayed": false,
+    "ananda_betrayed": false,
+    "kabir_betrayed": false,
+    "ledger_holder": null,
+    "ledger_given_to_kabir": false,
+    "prologue_tutorial_done": false
+  },
+  "nodes": [
+    {
+      "id": "prologue_start",
+      "type": "narration",
+      "chapter": 0,
+      "scene": "malhotra_tower_elevator",
+      "text": "马尔霍特拉航运总部，四十七层。\n\n电梯往上蹿的时候，手机震个不停——入职第一分钟，Vikram 办公室的内参急件已经砸到你脸上。\n\n标题只有四个字：「今日危局」。附件里跳出一个名字：Rupesh。",
+      "next": "prologue_open_choice"
+    },
+    {
+      "id": "prologue_open_choice",
+      "type": "choice",
+      "chapter": 0,
+      "text": "副总说过：十点闭门投资局，没有第二次进场机会。现在九点五十一。",
+      "choices": [
+        {
+          "id": "open_read_rupesh",
+          "label": "立刻点开附件，把 Rupesh 的来历扫一遍。",
+          "choiceType": "action",
+          "effects": { "rupesh_affection": 3 },
+          "flags": { "prologue_tutorial_done": true },
+          "next": "prologue_assistant_caught"
+        },
+        {
+          "id": "open_reply_vic",
+          "label": "「已收到。十分钟后到位。」先回急件再上楼。",
+          "choiceType": "dialogue",
+          "effects": { "vic_affection": 5 },
+          "flags": { "prologue_tutorial_done": true },
+          "next": "prologue_assistant_caught"
+        },
+        {
+          "id": "open_pocket_phone",
+          "label": "把手机揣进口袋——进了这一层再说话。",
+          "choiceType": "action",
+          "effects": { "vic_affection": 2, "rupesh_affection": 1 },
+          "flags": { "prologue_tutorial_done": true },
+          "next": "prologue_assistant_caught"
+        }
+      ]
+    },
+    {
+      "id": "prologue_assistant_caught",
+      "type": "dialogue",
+      "chapter": 0,
+      "speaker": "assistant",
+      "text": "Kavya 小姐？别装没看见。\nVikram 先生的局九点五十五分清场，你从现在起只有一个职责——让事情看上去合法。至于它善不善，不归你管。",
+      "next": "prologue_briefing_pick"
+    },
+    {
+      "id": "prologue_briefing_pick",
+      "type": "choice",
+      "chapter": 0,
+      "text": "她把一叠内参塞进你手里。电梯还在往上，纸页翻得哗哗响。你先翻哪一页？",
+      "choices": [
+        {
+          "id": "brief_vic_page",
+          "label": "【Vikram · Vic】——今天的局，他是主人。",
+          "choiceType": "action",
+          "effects": { "vic_affection": 3 },
+          "next": "prologue_brief_vic"
+        },
+        {
+          "id": "brief_rupesh_page",
+          "label": "【Rupesh】——来宾名单上唯一没被查透的人。",
+          "choiceType": "action",
+          "effects": { "rupesh_affection": 3 },
+          "next": "prologue_brief_rupesh"
+        },
+        {
+          "id": "brief_redlines",
+          "label": "直接跳到最后一页：今日红线。",
+          "choiceType": "action",
+          "effects": { "vic_affection": 1, "rupesh_affection": 1, "kabir_affection": 1 },
+          "next": "prologue_brief_redlines"
+        }
+      ]
+    },
+    {
+      "id": "prologue_brief_vic",
+      "type": "narration",
+      "chapter": 0,
+      "text": "二十九岁，物流帝国继承人，孟买老钱圈最想联姻的单身汉。备注只有一行：别被他礼貌骗了，他什么都看得见。",
+      "next": "prologue_meeting_prep"
+    },
+    {
+      "id": "prologue_brief_rupesh",
+      "type": "narration",
+      "chapter": 0,
+      "text": "二十二岁，班加罗尔理工，硅谷研究生。带着一份「改变印度」的 PPT 闯进评审会。备注：技术很漂亮，人未必干净。",
+      "next": "prologue_meeting_prep"
+    },
+    {
+      "id": "prologue_brief_redlines",
+      "type": "narration",
+      "chapter": 0,
+      "text": "红线三条：一，能耗数据不能漏给媒体；二，Rupesh 不能活着走出「合法」两个字；三，Kabir 的名字可能从会场外渗进来——今天没席位，但可能有麻烦。",
+      "next": "prologue_meeting_prep"
+    },
+    {
+      "id": "prologue_meeting_prep",
+      "type": "narration",
+      "chapter": 0,
+      "text": "顶层会议室的门合上。你第一次以公关身份站在这里——马尔霍特拉航运的牌桌边，没有退路了。",
+      "next": "prologue_chapter_end"
+    },
+    {
+      "id": "prologue_chapter_end",
+      "type": "chapter_end",
+      "chapter": 0,
+      "title": "序章 · 入局",
+      "text": "闭门投资局即将开始。",
+      "setCheckpoint": "prologue_chapter_end",
+      "next": "ch1_intro"
+    },
+    {
+      "id": "ch1_intro",
+      "type": "narration",
+      "chapter": 1,
+      "scene": "mumbai_boardroom",
+      "text": "顶层会议室没有窗户。空气被雪茄、咖啡和冷气滤成一种昂贵的疲倦。\n\n长桌尽头坐着 Vikram——日常被叫 Vic。一米八八，炭灰三件套裹出肩宽背直的轮廓；深琥珀色眼微挑，看人像秤重物。黑发梳拢，仅一缕碎发落在额侧，像不允许自己失控。\n\n他的目光落在你身上，不热，也不冷——只是把你放进账本的某一栏。",
+      "next": "ch1_vic_entrance"
+    },
+    {
+      "id": "ch1_vic_entrance",
+      "type": "dialogue",
+      "chapter": 1,
+      "speaker": "vic",
+      "text": "你就是新来的公关？坐。今天你会看到很多不该看的东西——学会假装没看见，是你的第一份工作。",
+      "next": "ch1_rupesh_arrival"
+    },
+    {
+      "id": "ch1_rupesh_arrival",
+      "type": "narration",
+      "chapter": 1,
+      "text": "投影灯亮之前，先进来的是 Rupesh。\n\n一米七八，衬衫袖口挽到小臂，刘海挡着一只眼；浅褐肤色，眼下青黑，却掩不住那双亮得过分的眼睛。贵牌运动鞋踩在地毯上，像一颗刚入轨的流星——好看，也扎眼。\n\nPPT 的光还没打在他脸上，他已经开始说话了。",
+      "next": "ch1_rupesh_present"
+    },
+    {
+      "id": "ch1_rupesh_present",
+      "type": "dialogue",
+      "chapter": 1,
+      "speaker": "rupesh",
+      "text": "Vikram 先生，感谢拨冗。Leviathan 边缘计算系统——让印度每一艘货轮，都变成会思考的节点。",
+      "next": "ch1_rupesh_ppt"
+    },
+    {
+      "id": "ch1_rupesh_ppt",
+      "type": "narration",
+      "chapter": 1,
+      "text": "投影亮起。曲线与徽章在墙上流淌。Rupesh 的手指划过屏幕，自信得近乎傲慢——侧脸在冷光里锋利又年轻。\n\n你注意到 Vikram 连眼皮都没抬。",
+      "next": "ch1_energy_discovery"
+    },
+    {
+      "id": "ch1_energy_discovery",
+      "type": "dialogue",
+      "chapter": 1,
+      "speaker": "vic",
+      "text": "Kavya，把技术附录第三页翻出来。Rupesh 先生——你的「边缘计算」，边缘到需要独立工业级液冷，峰值耗电五百千瓦？",
+      "next": "ch1_choice_legal"
+    },
+    {
+      "id": "ch1_choice_legal",
+      "type": "choice",
+      "chapter": 1,
+      "text": "会议室骤然安静。Rupesh 的笑容僵了半秒。Vic 在等你的包装——或者你的站队。",
+      "choices": [
+        {
+          "id": "c1_protect_vic",
+          "label": "「这份租赁协议，我会用法务条款守住马尔霍特拉航运的底线。」",
+          "choiceType": "dialogue",
+          "effects": { "vic_affection": 18, "rupesh_affection": -5 },
+          "flags": { "ch1_stood_with_vic": true },
+          "next": "ch1_vic_reaction_positive"
+        },
+        {
+          "id": "c1_back_rupesh",
+          "label": "趁换页间隙，把盲盒条款里的能耗上限悄悄放宽三行。",
+          "choiceType": "action",
+          "effects": { "rupesh_affection": 12, "vic_affection": -8 },
+          "flags": { "ch1_helped_rupesh": true },
+          "next": "ch1_rupesh_reaction_positive"
+        },
+        {
+          "id": "c1_neutral_pr",
+          "label": "「对外口径统一为：双方正就技术合规展开良性沟通。」",
+          "choiceType": "dialogue",
+          "effects": { "vic_affection": 3, "rupesh_affection": 3 },
+          "next": "ch1_neutral_continue"
+        }
+      ]
+    },
+    {
+      "id": "ch1_vic_reaction_positive",
+      "type": "dialogue",
+      "chapter": 1,
+      "speaker": "vic",
+      "text": "……还算清醒。孟买不缺聪明人，缺的是知道该把聪明用在哪里的聪明人。",
+      "next": "ch1_praya_sidebar"
+    },
+    {
+      "id": "ch1_rupesh_reaction_positive",
+      "type": "dialogue",
+      "chapter": 1,
+      "speaker": "rupesh",
+      "text": "（低声，仅你能听见）谢谢。有些人以为继承港口就叫懂技术。我们走着瞧。",
+      "next": "ch1_praya_sidebar"
+    },
+    {
+      "id": "ch1_neutral_continue",
+      "type": "narration",
+      "chapter": 1,
+      "text": "两边都不满意，但也都找不到发作的理由。公关的第一课：让所有人觉得自己赢了半步。",
+      "next": "ch1_praya_sidebar"
+    },
+    {
+      "id": "ch1_praya_sidebar",
+      "type": "narration",
+      "chapter": 1,
+      "text": "茶歇间隙，一个年轻女孩溜到你身边。她戴着夸张的墨镜，却把甜点塞得极其自然——Vic 的妹妹 Praya，你在简报里见过她的照片。",
+      "next": "ch1_praya_dialogue"
+    },
+    {
+      "id": "ch1_praya_dialogue",
+      "type": "dialogue",
+      "chapter": 1,
+      "speaker": "praya",
+      "text": "你是哥哥的公关对吧？帮帮忙——媒体又在写 Kabir 的脏话了，吸毒、卖国……他什么都没做！Sinha 家族买了通稿，要把他踩进泥里！",
+      "next": "ch1_choice_praya"
+    },
+    {
+      "id": "ch1_choice_praya",
+      "type": "choice",
+      "chapter": 1,
+      "text": "Praya 的眼眶发红。你知道 Vic 对 Kabir 印象极差——但粉丝的眼泪也是舆论。",
+      "choices": [
+        {
+          "id": "c1_praya_help",
+          "label": "接过 Praya 的手机，当场标出通稿里的逻辑漏洞。",
+          "choiceType": "action",
+          "effects": { "kabir_affection": 10, "vic_affection": -4 },
+          "next": "ch1_praya_grateful"
+        },
+        {
+          "id": "c1_praya_refuse",
+          "label": "「今天的主角是投资局。娱乐圈的事，我接不了。」",
+          "choiceType": "dialogue",
+          "effects": { "vic_affection": 5, "kabir_affection": -3 },
+          "next": "ch1_praya_hurt"
+        },
+        {
+          "id": "c1_praya_balance",
+          "label": "「我可以帮你查是谁买的通稿，但不会以航运府名义发声。」",
+          "choiceType": "dialogue",
+          "effects": { "kabir_affection": 5, "vic_affection": 2 },
+          "next": "ch1_praya_cautious"
+        }
+      ]
+    },
+    {
+      "id": "ch1_praya_grateful",
+      "type": "dialogue",
+      "chapter": 1,
+      "speaker": "praya",
+      "text": "谢谢你……Kabir 要是知道还有人愿意听他说话——",
+      "next": "ch1_vic_blindbox_brief"
+    },
+    {
+      "id": "ch1_praya_hurt",
+      "type": "dialogue",
+      "chapter": 1,
+      "speaker": "praya",
+      "text": "……明白了。老钱的世界，果然连同情都要验资。",
+      "next": "ch1_vic_blindbox_brief"
+    },
+    {
+      "id": "ch1_praya_cautious",
+      "type": "dialogue",
+      "chapter": 1,
+      "speaker": "praya",
+      "text": "至少你没有假装关心。比大多数人都诚实。",
+      "next": "ch1_vic_blindbox_brief"
+    },
+    {
+      "id": "ch1_vic_blindbox_brief",
+      "type": "dialogue",
+      "chapter": 1,
+      "speaker": "vic",
+      "text": "（目光仍落在能耗表上，声音压得极低）盲盒租赁。集装箱各用各的，能耗归我们审计，给他二十四个月码头接驳权。对外——普通技术合作。你把条款洗干净，然后念给他们听。",
+      "next": "ch1_blindbox_kavya_polish"
+    },
+    {
+      "id": "ch1_blindbox_kavya_polish",
+      "type": "narration",
+      "chapter": 1,
+      "text": "你在法务附录的空白处飞速改了三行措辞：删掉刺眼的动词，补上「双方自愿」「独立审计」之类的护甲。这不是你的方案——是 Vic 的刀，你只是负责把它递出去时不割伤任何人的面子。",
+      "next": "ch1_blindbox_proposal"
+    },
+    {
+      "id": "ch1_blindbox_proposal",
+      "type": "dialogue",
+      "chapter": 1,
+      "speaker": "kavya",
+      "text": "「根据马尔霍特拉航运法务意见，建议签署盲盒租赁补充协议：集装箱用途互不干涉，能耗数据接受航运方独立审计，Rupesh 先生享有二十四个月码头接驳权。对外统一口径为常规技术合作。请两位过目。」",
+      "next": "ch1_vic_response_sign"
+    },
+    {
+      "id": "ch1_vic_response_sign",
+      "type": "dialogue",
+      "chapter": 1,
+      "speaker": "vic",
+      "text": "（嘴角微扬）盲盒。有意思——打开之前，谁也不知道里面装的是礼物还是炸弹。签吧。",
+      "next": "ch1_rupesh_response_sign"
+    },
+    {
+      "id": "ch1_rupesh_response_sign",
+      "type": "dialogue",
+      "chapter": 1,
+      "speaker": "rupesh",
+      "text": "成交。Vikram 先生——别后悔借我电。",
+      "next": "ch1_signing_narration"
+    },
+    {
+      "id": "ch1_signing_narration",
+      "type": "narration",
+      "chapter": 1,
+      "text": "钢笔划过纸面。无论你是否修改过条款，公共结果已经铸成：Rupesh 拿到了电和船，Vic 拿到了一张可以假装看不见的牌。",
+      "flags": { "ch1_blindbox_signed": true },
+      "next": "ch1_choice_post_sign"
+    },
+    {
+      "id": "ch1_choice_post_sign",
+      "type": "choice",
+      "chapter": 1,
+      "text": "散场前，还有最后一道缝隙可以塞进你的态度。",
+      "choices": [
+        {
+          "id": "c1_post_follow_vic",
+          "label": "走到 Vic 身侧，低声汇报今日舆情风险清单。",
+          "choiceType": "action",
+          "effects": { "vic_affection": 12, "rupesh_affection": -3 },
+          "next": "ch1_post_vic_path"
+        },
+        {
+          "id": "c1_post_follow_rupesh",
+          "label": "在电梯口截住 Rupesh，提醒他码头审计会有第三方进场。",
+          "choiceType": "action",
+          "effects": { "rupesh_affection": 8, "vic_affection": -3 },
+          "next": "ch1_post_rupesh_path"
+        },
+        {
+          "id": "c1_post_leave",
+          "label": "直接离场。今天已经做得够多了。",
+          "choiceType": "action",
+          "effects": {},
+          "next": "ch1_post_neutral_path"
+        }
+      ]
+    },
+    {
+      "id": "ch1_post_vic_path",
+      "type": "dialogue",
+      "chapter": 1,
+      "speaker": "vic",
+      "text": "清单留下。——还有，Praya 的事，你别插手太深。那个娱乐圈的人，不值得你浪费筹码。",
+      "next": "ch1_investment_wrap"
+    },
+    {
+      "id": "ch1_post_rupesh_path",
+      "type": "dialogue",
+      "chapter": 1,
+      "speaker": "rupesh",
+      "text": "第三方？哈……随你们。只要电闸在我这边，审计员数的是瓦特，不是真相。",
+      "next": "ch1_investment_wrap"
+    },
+    {
+      "id": "ch1_post_neutral_path",
+      "type": "narration",
+      "chapter": 1,
+      "text": "你走进孟买的暮色。大楼玻璃映出你的影子——渺小，但刚刚在两头狼之间走了一遭。",
+      "next": "ch1_investment_wrap"
+    },
+    {
+      "id": "ch1_investment_wrap",
+      "type": "narration",
+      "chapter": 1,
+      "text": "散场铃响过很久，大楼里的冷气还在嗡鸣。盲盒已经封好——没人知道打开时会炸出什么。",
+      "next": "ch1_investment_end"
+    },
+    {
+      "id": "ch1_investment_end",
+      "type": "chapter_end",
+      "chapter": 1,
+      "title": "第一章 · 闭门投资局",
+      "text": "资本盲盒已签署。孟买的齿轮，又咬合了一格。",
+      "setCheckpoint": "ch1_investment_end",
+      "next": "ch1_vic_route_branch"
+    },
+    {
+      "id": "ch1_vic_route_branch",
+      "type": "branch",
+      "chapter": 1,
+      "conditions": [
+        {
+          "if": {
+            "variable": "vic_affection",
+            "gte": 40,
+            "flag": "vic_route_1_completed",
+            "flagEq": false,
+            "flagNot": "vic_betrayed"
+          },
+          "next": "enter_vic_route_1"
+        },
+        {
+          "default": true,
+          "next": "ch2_dharavi_placeholder"
+        }
+      ]
+    },
+    {
+      "id": "enter_vic_route_1",
+      "type": "route_enter",
+      "chapter": 1,
+      "routeFocus": "vic",
+      "mainlineCheckpoint": "ch1_investment_end",
+      "text": "投资局散场两小时后，Vic 的助理送来一张便签。没有抬头，没有落款，只有一个地址：孟买湾私人码头，十二号仓库。",
+      "next": "vic_private_1"
+    },
+    {
+      "id": "vic_private_1",
+      "type": "narration",
+      "chapter": 1,
+      "scene": "private_warehouse",
+      "routeFocus": "vic",
+      "text": "仓库里只有一盏吊灯。集装箱像沉默的巨兽排列在黑暗中。Vic 脱了西装外套，衬衫袖口卷到小臂——你第一次见他不像董事长，更像某种蓄势的野兽。",
+      "next": "vic_private_2"
+    },
+    {
+      "id": "vic_private_2",
+      "type": "dialogue",
+      "chapter": 1,
+      "speaker": "vic",
+      "routeFocus": "vic",
+      "text": "你以为今天是在帮 Rupesh 收尾？不。我是在给自己留一条后路——那小子想咬 B 家族，我乐见其成。但你，Kavya，你是唯一知道盲盒里装着什么的人。",
+      "next": "vic_private_choice_1"
+    },
+    {
+      "id": "vic_private_choice_1",
+      "type": "choice",
+      "chapter": 1,
+      "routeFocus": "vic",
+      "text": "他的目光落在你身上，带着审视，也带着某种危险的邀请。",
+      "choices": [
+        {
+          "id": "vic_c1_honest",
+          "label": "「我只是做我的本职工作。」",
+          "choiceType": "dialogue",
+          "effects": { "vic_affection": 5 },
+          "next": "vic_private_3a"
+        },
+        {
+          "id": "vic_c1_ambitious",
+          "label": "「你想让我成为你的人——不只是航运府的雇员。」",
+          "choiceType": "dialogue",
+          "effects": { "vic_affection": 10 },
+          "next": "vic_private_3b"
+        },
+        {
+          "id": "vic_c1_deflect",
+          "label": "环顾仓库，转移话题：「这些集装箱，今晚就要出港？」",
+          "choiceType": "action",
+          "effects": { "vic_affection": 3, "rupesh_affection": 2 },
+          "next": "vic_private_3c"
+        }
+      ]
+    },
+    {
+      "id": "vic_private_3a",
+      "type": "dialogue",
+      "chapter": 1,
+      "speaker": "vic",
+      "routeFocus": "vic",
+      "text": "本职工作。好词。孟买最贵的谎言，往往穿着职业装。",
+      "next": "vic_private_4"
+    },
+    {
+      "id": "vic_private_3b",
+      "type": "dialogue",
+      "chapter": 1,
+      "speaker": "vic",
+      "routeFocus": "vic",
+      "text": "……聪明。比 Praya 聪明，比董事会那些人聪明。别让我失望——失望的人，在这个城市活不长。",
+      "next": "vic_private_4"
+    },
+    {
+      "id": "vic_private_3c",
+      "type": "dialogue",
+      "chapter": 1,
+      "speaker": "vic",
+      "routeFocus": "vic",
+      "text": "出港。当然出港。有些货，白天不能见光。",
+      "next": "vic_private_4"
+    },
+    {
+      "id": "vic_private_4",
+      "type": "narration",
+      "chapter": 1,
+      "routeFocus": "vic",
+      "text": "海风从门缝灌进来。远处货轮的汽笛低沉，像某种迟到的告别。\n\nVic 忽然沉默了很久。你看见他拇指摩挲袖扣——那不是一个习惯，更像在压住什么。",
+      "next": "vic_private_choice_2"
+    },
+    {
+      "id": "vic_private_choice_2",
+      "type": "choice",
+      "chapter": 1,
+      "routeFocus": "vic",
+      "text": "夜风很凉。你知道不该追问——但此刻若退半步，可能再也进不了这扇门。",
+      "choices": [
+        {
+          "id": "vic_c2_stay",
+          "label": "安静地站在他身侧，等他自己开口。",
+          "choiceType": "action",
+          "effects": { "vic_affection": 12 },
+          "next": "vic_private_5a"
+        },
+        {
+          "id": "vic_c2_ask",
+          "label": "「你在等一艘迟到的船？」",
+          "choiceType": "dialogue",
+          "effects": { "vic_affection": 8 },
+          "next": "vic_private_5b"
+        },
+        {
+          "id": "vic_c2_leave",
+          "label": "「地址我到了。话也听到了。我该走了。」",
+          "choiceType": "dialogue",
+          "effects": { "vic_affection": -5 },
+          "next": "vic_private_5c"
+        }
+      ]
+    },
+    {
+      "id": "vic_private_5a",
+      "type": "dialogue",
+      "chapter": 1,
+      "speaker": "vic",
+      "routeFocus": "vic",
+      "text": "……有人教过我，等。我等了四十八小时，等一张通行证，等一支救援队。什么都没等到。\n\n所以现在我不再等。你明白吗？",
+      "next": "vic_private_6"
+    },
+    {
+      "id": "vic_private_5b",
+      "type": "dialogue",
+      "chapter": 1,
+      "speaker": "vic",
+      "routeFocus": "vic",
+      "text": "迟到的船。呵——孟买每天都有迟到的船，只是没人愿意为迟到的船买单。你问这个，说明你看得到水面下的东西。",
+      "next": "vic_private_6"
+    },
+    {
+      "id": "vic_private_5c",
+      "type": "dialogue",
+      "chapter": 1,
+      "speaker": "vic",
+      "routeFocus": "vic",
+      "text": "走吧。记住今晚——但你不必记住我。",
+      "next": "vic_private_6"
+    },
+    {
+      "id": "vic_private_6",
+      "type": "narration",
+      "chapter": 1,
+      "routeFocus": "vic",
+      "text": "码头尽头，城市灯火像一盘倾覆的珠宝。Vic 重新穿好外套，又变回那个无懈可击的继承人。",
+      "next": "vic_private_scene_1_end"
+    },
+    {
+      "id": "vic_private_scene_1_end",
+      "type": "route_return",
+      "chapter": 1,
+      "clearRouteFocus": true,
+      "resolveNext": "mainline_checkpoint",
+      "flags": { "vic_route_1_completed": true },
+      "text": "天快亮了。孟买的权力牌桌不会等你沉溺私情——但你已经在那张桌上，留下了一枚属于自己的筹码。"
+    },
+    {
+      "id": "ch2_dharavi_placeholder",
+      "type": "placeholder",
+      "chapter": 2,
+      "scene": "dharavi_skyline",
+      "title": "第二章 · 达拉维强拆暴乱",
+      "text": "【Demo 到此结束】\n\n下一章：推土机、信号干扰、Kabir 坐在履带前赌命、Rupesh 在地下室溶解主板……\n\n—— 感谢试玩《孟买名利场》"
+    }
+  ]
+}
