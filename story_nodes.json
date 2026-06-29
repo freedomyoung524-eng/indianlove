@@ -2,10 +2,10 @@
   "meta": {
     "title": "孟买名利场",
     "titleEn": "Mumbai High Society",
-    "version": "0.2.0",
+    "version": "0.3.1",
     "playerId": "kavya",
     "startNode": "prologue_start",
-    "demoScope": "prologue + chapter1 + vic_route + ch2_placeholder"
+    "demoScope": "prologue + chapter1 + vic_route + chapter2_dharavi + ch3_placeholder"
   },
   "characters": {
     "kavya": { "name": "Kavya", "role": "player" },
@@ -28,6 +28,19 @@
     "ch1_blindbox_signed": false,
     "ch1_stood_with_vic": false,
     "ch1_helped_rupesh": false,
+    "ananda_poison_sample_received": false,
+    "ananda_distress_signal_read": false,
+    "ananda_manor_escape_witnessed": false,
+    "ch2_kabir_lifesaver": false,
+    "ch2_rupesh_trace_destroyed": false,
+    "ch2_satellite_live_60s": false,
+    "ch2_vic_phone_moment": false,
+    "ch2_public_first": false,
+    "ch2_rupesh_first": false,
+    "ch2_professional_firewall": false,
+    "ch2_ananda_warning_used": false,
+    "ch2_kabir_last_message_seen": false,
+    "ch2_rupesh_origin_burned": false,
     "vic_route_1_completed": false,
     "vic_betrayed": false,
     "rupesh_betrayed": false,
@@ -83,7 +96,59 @@
       "type": "dialogue",
       "chapter": 0,
       "speaker": "assistant",
-      "text": "Kavya 小姐？别装没看见。\nVikram 先生的局九点五十五分清场，你从现在起只有一个职责——让事情看上去合法。至于它善不善，不归你管。",
+      "text": "Kavya 小姐？电梯里信号差，不代表消息可以不回。\n\n九点五十五清场。Vic 先生只看结果：媒体别闻到血，法务别挑出洞。你今天要做的不是评判这单干不干净，是别让它在纸面上出事。",
+      "next": "prologue_response_choice"
+    },
+    {
+      "id": "prologue_response_choice",
+      "type": "choice",
+      "chapter": 0,
+      "text": "她把一叠文件按进你怀里。电梯还剩十几层，你可以先问一句，也可以先闭嘴看牌。",
+      "choices": [
+        {
+          "id": "response_risk_list",
+          "label": "「明白。先给我风险清单。」",
+          "choiceType": "dialogue",
+          "effects": { "vic_affection": 2 },
+          "next": "prologue_response_risk"
+        },
+        {
+          "id": "response_illegal_line",
+          "label": "「如果它已经越线了呢？」",
+          "choiceType": "dialogue",
+          "effects": { "kabir_affection": 1, "vic_affection": -1 },
+          "next": "prologue_response_line"
+        },
+        {
+          "id": "response_read_silent",
+          "label": "不接话，先翻文件页脚和附件来源。",
+          "choiceType": "action",
+          "effects": { "rupesh_affection": 1, "vic_affection": 1 },
+          "next": "prologue_response_silent"
+        }
+      ]
+    },
+    {
+      "id": "prologue_response_risk",
+      "type": "dialogue",
+      "chapter": 0,
+      "speaker": "assistant",
+      "text": "好。第一，能耗。第二，媒体。第三，Vic 先生不喜欢别人把同情心带进会议室。",
+      "next": "prologue_briefing_pick"
+    },
+    {
+      "id": "prologue_response_line",
+      "type": "dialogue",
+      "chapter": 0,
+      "speaker": "assistant",
+      "text": "那就更不能让它在你手里越线。记住，Kavya，孟买最贵的工作不是洗白，是知道哪一页不能留下指纹。",
+      "next": "prologue_briefing_pick"
+    },
+    {
+      "id": "prologue_response_silent",
+      "type": "narration",
+      "chapter": 0,
+      "text": "你没有立刻回答。\n\n文件页脚是马尔霍特拉航运，附件来源却绕了两层离岸邮箱。助理看了你一眼，语气终于低了一点。",
       "next": "prologue_briefing_pick"
     },
     {
@@ -140,7 +205,7 @@
       "id": "prologue_meeting_prep",
       "type": "narration",
       "chapter": 0,
-      "text": "顶层会议室的门合上。你第一次以公关身份站在这里——马尔霍特拉航运的牌桌边，没有退路了。",
+      "text": "顶层会议室的门在你身后合上。\n\n门外的助理、走廊冷气和手机信号一起被隔断。有人把一份未签字的补充协议推到你手边，页脚印着「马尔霍特拉航运」。\n\n十点还没到，你已经被写进流程里。",
       "next": "prologue_chapter_end"
     },
     {
@@ -165,7 +230,7 @@
       "type": "dialogue",
       "chapter": 1,
       "speaker": "vic",
-      "text": "你就是新来的公关？坐。今天你会看到很多不该看的东西——学会假装没看见，是你的第一份工作。",
+      "text": "新来的公关。坐。\n\n今天这间屋子里的每一句话，都可能变成明天的证据。你负责让它们留在该留的位置。",
       "next": "ch1_rupesh_arrival"
     },
     {
@@ -206,7 +271,7 @@
       "choices": [
         {
           "id": "c1_protect_vic",
-          "label": "「这份租赁协议，我会用法务条款守住马尔霍特拉航运的底线。」",
+          "label": "「我会把风险锁在补充条款里。马尔霍特拉不会替任何人兜底。」",
           "choiceType": "dialogue",
           "effects": { "vic_affection": 18, "rupesh_affection": -5 },
           "flags": { "ch1_stood_with_vic": true },
@@ -222,7 +287,7 @@
         },
         {
           "id": "c1_neutral_pr",
-          "label": "「对外口径统一为：双方正就技术合规展开良性沟通。」",
+          "label": "「对外只说常规技术合作。其他内容，不进公开口径。」",
           "choiceType": "dialogue",
           "effects": { "vic_affection": 3, "rupesh_affection": 3 },
           "next": "ch1_neutral_continue"
@@ -325,7 +390,7 @@
       "type": "dialogue",
       "chapter": 1,
       "speaker": "vic",
-      "text": "（目光仍落在能耗表上，声音压得极低）盲盒租赁。集装箱各用各的，能耗归我们审计，给他二十四个月码头接驳权。对外——普通技术合作。你把条款洗干净，然后念给他们听。",
+      "text": "（目光仍落在能耗表上，声音压得极低）盲盒租赁。集装箱各用各的，能耗归我们审计，给他二十四个月码头接驳权。\n\n对外，普通技术合作。纸面干净，口径一致。Kavya，念给他们听。",
       "next": "ch1_blindbox_kavya_polish"
     },
     {
@@ -340,7 +405,7 @@
       "type": "dialogue",
       "chapter": 1,
       "speaker": "kavya",
-      "text": "「根据马尔霍特拉航运法务意见，建议签署盲盒租赁补充协议：集装箱用途互不干涉，能耗数据接受航运方独立审计，Rupesh 先生享有二十四个月码头接驳权。对外统一口径为常规技术合作。请两位过目。」",
+      "text": "「补充协议按盲盒租赁处理：用途互不追问，能耗接受航运方审计，码头接驳权二十四个月。\n\n对外只有一句，常规技术合作。多一个字，都是风险。」",
       "next": "ch1_vic_response_sign"
     },
     {
@@ -480,7 +545,7 @@
       "chapter": 1,
       "speaker": "vic",
       "routeFocus": "vic",
-      "text": "你以为今天是在帮 Rupesh 收尾？不。我是在给自己留一条后路——那小子想咬 B 家族，我乐见其成。但你，Kavya，你是唯一知道盲盒里装着什么的人。",
+      "text": "你以为今天是在替 Rupesh 收尾。\n\n不是。那小子想咬 B 家族，我只是在旁边留了一扇没上锁的门。\n\n而你，Kavya，是唯一看见钥匙放在哪里的人。",
       "next": "vic_private_choice_1"
     },
     {
@@ -528,7 +593,7 @@
       "chapter": 1,
       "speaker": "vic",
       "routeFocus": "vic",
-      "text": "……聪明。比 Praya 聪明，比董事会那些人聪明。别让我失望——失望的人，在这个城市活不长。",
+      "text": "……聪明。比董事会那些人快一点。\n\n别急着高兴。站上桌边以后，摔下去会更难看。",
       "next": "vic_private_4"
     },
     {
@@ -584,7 +649,7 @@
       "chapter": 1,
       "speaker": "vic",
       "routeFocus": "vic",
-      "text": "……有人教过我，等。我等了四十八小时，等一张通行证，等一支救援队。什么都没等到。\n\n所以现在我不再等。你明白吗？",
+      "text": "……我等过四十八小时。\n\n一张通行证，一支救援队，一句准许。都没有来。\n\n所以现在，轮到别人等我签字。",
       "next": "vic_private_6"
     },
     {
@@ -624,11 +689,244 @@
     },
     {
       "id": "ch2_dharavi_placeholder",
-      "type": "placeholder",
+      "type": "narration",
       "chapter": 2,
-      "scene": "dharavi_skyline",
+      "scene": "dharavi_morning",
+      "text": "第二天早上，新闻推送比闹钟更早亮起。\n\n「达拉维城市更新行动因天气原因暂缓。」\n\n字句很温和，像一条被熨平的白衬衫。可你的工作群里没人说话，Praya 连续打来三个未接电话，最后只发来一句：\n\nKabir 去剧院了。",
+      "next": "ch2_ananda_warning_branch"
+    },
+    {
+      "id": "ch2_ananda_warning_branch",
+      "type": "branch",
+      "chapter": 2,
+      "conditions": [
+        {
+          "if": {
+            "flag": "ananda_poison_sample_received"
+          },
+          "next": "ch2_ananda_warning"
+        },
+        {
+          "if": {
+            "flag": "ananda_distress_signal_read"
+          },
+          "next": "ch2_ananda_warning"
+        },
+        {
+          "default": true,
+          "next": "ch2_news_false_delay"
+        }
+      ]
+    },
+    {
+      "id": "ch2_ananda_warning",
+      "type": "dialogue",
+      "chapter": 2,
+      "speaker": "ananda",
+      "text": "（语音消息）今天别相信任何延期公告。贵妇们不会为了尘土改下午茶，Kavya。",
+      "effects": { "ananda_affection": 6 },
+      "flags": { "ch2_ananda_warning_used": true },
+      "next": "ch2_news_false_delay"
+    },
+    {
+      "id": "ch2_news_false_delay",
+      "type": "narration",
+      "chapter": 2,
+      "text": "你把新闻页往下拖。延期公告还挂在首页，下面却已经有人发出模糊视频：黄色推土机、警戒线、被挤到路边的孩子。\n\n另一个陌生号码同时弹出坐标。\n\n地下室。九十秒。",
+      "next": "ch2_arrival_split_view"
+    },
+    {
+      "id": "ch2_arrival_split_view",
+      "type": "narration",
+      "chapter": 2,
+      "scene": "dharavi_demolition_line",
+      "text": "达拉维的空气里有湿铁皮、柴油和雨后污水的味道。\n\n剧院招牌歪在半空，旧灯泡还没拆干净。信号干扰车停在路口，手机从 5G 掉到无服务，又短暂跳回一格。\n\n地上，推土机履带慢慢往前。地下，那个坐标还在闪。",
+      "next": "ch2_kabir_on_tread"
+    },
+    {
+      "id": "ch2_kabir_on_tread",
+      "type": "narration",
+      "chapter": 2,
+      "text": "Kabir 坐在履带正前方。\n\n他穿着猩红色高定长外套，像把最后一场红毯拖进泥水里。发梢被汗打湿，耳钉还亮着，亮得近乎荒唐。\n\n驾驶员隔着玻璃看他。他抬起脸，朝那台巨大的机器笑了一下。\n\n「别哭。」他对举着手机却连不上网的人群说，「看清楚，是谁把我推到这里。」",
+      "next": "ch2_rupesh_basement_signal"
+    },
+    {
+      "id": "ch2_rupesh_basement_signal",
+      "type": "dialogue",
+      "chapter": 2,
+      "speaker": "rupesh",
+      "text": "别只看地上。地下室还有九十秒。\n\n他们要的不是砖，是那台旧网关。它落到 B 家族手里，我就不只是 Zaker 了，我会变成他们新闻稿里最方便的那种怪物。",
+      "next": "ch2_vic_phone_offer"
+    },
+    {
+      "id": "ch2_vic_phone_offer",
+      "type": "dialogue",
+      "chapter": 2,
+      "speaker": "vic",
+      "text": "我看见了。\n\n别问镜头从哪里来。先把三件事处理干净：直播主体，画面来源，马尔霍特拉航运的切割边界。\n\n你要我救人，还是要我教你怎么让他们不敢杀人。",
+      "next": "ch2_choice_priority"
+    },
+    {
+      "id": "ch2_choice_priority",
+      "type": "choice",
+      "chapter": 2,
+      "text": "你只有一个 60 秒窗口。地上是 Kabir 的身体，地下是 Rupesh 的过去，高处是 Vic 的镜头。你先抓哪一端？",
+      "choices": [
+        {
+          "id": "ch2_c_save_kabir",
+          "label": "先抢直播窗口，让全世界看见履带前的 Kabir。",
+          "choiceType": "action",
+          "effects": { "kabir_affection": 18, "rupesh_affection": -5, "vic_affection": -4 },
+          "flags": {
+            "ch2_kabir_lifesaver": true,
+            "ch2_satellite_live_60s": true,
+            "ch2_public_first": true,
+            "ch2_kabir_last_message_seen": true
+          },
+          "next": "ch2_choice_save_kabir"
+        },
+        {
+          "id": "ch2_c_protect_rupesh",
+          "label": "先接地下室信号，给 Rupesh 争取毁证时间。",
+          "choiceType": "action",
+          "effects": { "rupesh_affection": 18, "kabir_affection": -6, "vic_affection": 3 },
+          "flags": {
+            "ch2_rupesh_trace_destroyed": true,
+            "ch2_satellite_live_60s": true,
+            "ch2_rupesh_first": true,
+            "ch2_rupesh_origin_burned": true
+          },
+          "next": "ch2_choice_protect_rupesh"
+        },
+        {
+          "id": "ch2_c_professional_firewall",
+          "label": "让 Vic 借镜头、Rupesh 借频段，你来切割直播主体。",
+          "choiceType": "action",
+          "effects": { "vic_affection": 15, "kabir_affection": 8, "rupesh_affection": 8 },
+          "flags": {
+            "ch2_kabir_lifesaver": true,
+            "ch2_rupesh_trace_destroyed": true,
+            "ch2_satellite_live_60s": true,
+            "ch2_vic_phone_moment": true,
+            "ch2_professional_firewall": true
+          },
+          "next": "ch2_choice_professional_firewall"
+        }
+      ]
+    },
+    {
+      "id": "ch2_choice_save_kabir",
+      "type": "narration",
+      "chapter": 2,
+      "text": "你把所有能动用的账号、媒体群和海外记者频道都压到地面。\n\n第一个画面接通时，Kabir 的脸出现在全球 feed 上。镜头太近，近到能看见他眼里的血丝，和手机屏幕上一条未发送视频的标题：\n\n「给还愿意看我的人」。\n\n地下室的信号断了一次。Rupesh 没骂你，只发来一行字：知道了。",
+      "next": "ch2_satellite_live_60s"
+    },
+    {
+      "id": "ch2_choice_protect_rupesh",
+      "type": "narration",
+      "chapter": 2,
+      "text": "你先接了地下室。\n\n强酸倒下去时，耳机里有电流声，也有他很低的一句笑。\n\n别用那种眼神看我。我不是在烧机器，我是在烧他们给我留的姓。\n\n上方传来人群尖叫。Kabir 还在履带前，直播晚了几秒。",
+      "next": "ch2_satellite_live_60s"
+    },
+    {
+      "id": "ch2_choice_professional_firewall",
+      "type": "narration",
+      "chapter": 2,
+      "text": "你没有说救人，也没有说交易。\n\n你把直播主体切给第三方人道组织，把高空画面伪装成路人聚合流，把 Rupesh 的卫星接口压成临时跳板。马尔霍特拉航运从纸面上干干净净。\n\n电话那头，Vic 安静了两秒。\n\n「现在，Kavya，」他说，「你开始像个能上桌的人了。」",
+      "next": "ch2_satellite_live_60s"
+    },
+    {
+      "id": "ch2_satellite_live_60s",
+      "type": "narration",
+      "chapter": 2,
+      "text": "信号恢复了六十秒。\n\n六十秒里，Kabir 的脸、推土机的履带、地下室涌出的白烟、高空镜头里压满街口的人群，被缝进同一个画面。\n\n司机踩下刹车。履带停住时，离 Kabir 的膝盖只剩半个手掌。\n\n全世界都看见了。",
+      "flags": { "ch2_satellite_live_60s": true },
+      "next": "ch2_aftermath_route_truth"
+    },
+    {
+      "id": "ch2_aftermath_route_truth",
+      "type": "branch",
+      "chapter": 2,
+      "conditions": [
+        {
+          "if": {
+            "flag": "ch2_public_first"
+          },
+          "next": "ch2_aftermath_kabir"
+        },
+        {
+          "if": {
+            "flag": "ch2_rupesh_first"
+          },
+          "next": "ch2_aftermath_rupesh"
+        },
+        {
+          "if": {
+            "flag": "ch2_professional_firewall"
+          },
+          "next": "ch2_aftermath_vic"
+        },
+        {
+          "default": true,
+          "next": "ch2_aftermath_balanced"
+        }
+      ]
+    },
+    {
+      "id": "ch2_aftermath_kabir",
+      "type": "narration",
+      "chapter": 2,
+      "text": "你看见那个视频标题了？\n\n他坐在泥水里，声音轻得几乎不像舞台上的人。\n\n我不是怕死。死也没什么新鲜的。我怕他们明天说，Kabir 自导自演，Kabir 吸毒发疯，Kabir 活该。\n\n所以谢谢你，让他们没来得及替我写结局。",
+      "next": "ch2_dharavi_end"
+    },
+    {
+      "id": "ch2_aftermath_rupesh",
+      "type": "narration",
+      "chapter": 2,
+      "text": "Rupesh 从地下室爬出来时，手背被灼出一片红。\n\n他把一截沾着灰的接口线塞进你掌心。\n\n这次不是借，是还。别高兴太早，我还是讨厌你们这群会把一切洗成合法的人。\n\n他说完，又低声补了一句。\n\n但你刚才没有让我一个人烧。",
+      "next": "ch2_dharavi_end"
+    },
+    {
+      "id": "ch2_aftermath_vic",
+      "type": "narration",
+      "chapter": 2,
+      "text": "电话那头很安静。只有直升机桨叶声从远处切过。\n\n救人和保局，从来不是两件事。区别在于，大多数人只会跪着求前者，或者跪着卖掉后者。\n\n你今天站着做完了。\n\nKavya，记住这种感觉。它会上瘾。",
+      "next": "ch2_dharavi_end"
+    },
+    {
+      "id": "ch2_aftermath_balanced",
+      "type": "narration",
+      "chapter": 2,
+      "text": "推土机停了，地下室也没有塌。\n\n人群开始哭，开始骂，开始把刚才的六十秒一遍遍转发。你站在噪声正中央，却觉得四周忽然安静。\n\n所有人都活了下来。但没有人真的赢。",
+      "next": "ch2_dharavi_end"
+    },
+    {
+      "id": "ch2_dharavi_end",
+      "type": "chapter_end",
+      "chapter": 2,
       "title": "第二章 · 达拉维强拆暴乱",
-      "text": "【Demo 到此结束】\n\n下一章：推土机、信号干扰、Kabir 坐在履带前赌命、Rupesh 在地下室溶解主板……\n\n—— 感谢试玩《孟买名利场》"
+      "text": "推土机停下，地下室冒烟，高空镜头移开。\n\nB 家族的名字没有出现在任何公开口径里，但你知道，他们已经把你从「公关顾问」改写成了「必须清除的变量」。",
+      "setCheckpoint": "ch2_dharavi_end",
+      "next": "ch2_route_branch"
+    },
+    {
+      "id": "ch2_route_branch",
+      "type": "branch",
+      "chapter": 2,
+      "conditions": [
+        {
+          "default": true,
+          "next": "ch3_cruise_placeholder"
+        }
+      ]
+    },
+    {
+      "id": "ch3_cruise_placeholder",
+      "type": "placeholder",
+      "chapter": 3,
+      "scene": "cruise_invitation",
+      "title": "第三章 · 公海游轮",
+      "text": "【试玩版到此结束】\n\n下一章：慈善晚宴、公海封锁、账本解密、冷库逃生与午夜 60 秒烟花盲区。\n\n—— 感谢试玩《孟买名利场》"
     }
   ]
 }

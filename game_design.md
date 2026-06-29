@@ -68,6 +68,8 @@ Demo 与正式版共用同一份 `story_nodes.json`，正式版仅扩展 `scene`
 
 **文字初遇规则：** 男主第一次进入场景时，须先写外貌/着装（1～3 句），再写台词或动作；详见各 `design` 档案「初遇镜头建议」。
 
+**角色语音规则：** 所有角色台词必须参考 `design/character_voice_bible.md`。生成或改写 `story_nodes.json` 时，需检查句式、词汇、潜台词和禁用写法，避免不同角色共用同一种“聪明话”。
+
 ### 2.4 男主关系网（剧情约束）
 
 - Vic 与 Rupesh：投资局中的利用与欣赏，非绝对敌对
@@ -374,6 +376,7 @@ candidates = [男主 | affection ≥ 60]
 - **公共核心**：推土机、信号干扰、60 秒全球直播
 - **男主戏份**：Kabir 挡履带；Rupesh 地下室毁证；Vic 高空旁观
 - **分线入口**：Kabir/Rupesh 事件后分线
+- **质检与节点方案**：见 `design/audits/dharavi_quality_audit.md` 与 `design/chapter2_dharavi_node_outline.md`
 
 **Demo 范围：** ❌ 仅占位节点 `ch2_dharavi_placeholder`
 
@@ -513,8 +516,18 @@ candidates = [男主 | affection ≥ 60]
 ## 9. 开发流水线
 
 ```
-design/*.md.txt → story_nodes.json → /plot-designer 校验 → Demo 引擎 → 迭代扩展
+design/*.md.txt → design/character_voice_bible.md 语音约束 → design/quality_workflow.md 质检 → .agents/story-quality-auditor.md 审核 → story_nodes.json → Demo 引擎 → 迭代扩展
 ```
+
+新增公共事件、男主分线、关键选择和结局条件时，必须先使用 `design/quality_workflow.md` 的质检卡检查“同一事件，不同路线，不同真相”。如需自动化审稿，使用 `.agents/story-quality-auditor.md` 的 agent 描述输出评分、风险和返修动作。低于通过线的内容不进入 `story_nodes.json`。
+
+试玩反馈进入独立迭代流程：
+
+```
+试玩 → design/playtests/playtest_YYYY-MM-DD_NNN.md → .agents/playtest-feedback-improver.md 诊断 → 文案/节点/分支修改 → 复测
+```
+
+每次试玩应尽量保存当前节点、主要选择、好感度和关键 flags。若无法自动捕获分支状态，则在 playtest 记录中标注 `unknown`，不要推测。试玩反馈优先处理语言自然度、上下文缺口、互动节奏、选择弱化和乙女情绪不足等体验问题。
 
 ---
 

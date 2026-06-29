@@ -113,6 +113,7 @@ class StoryEngine {
     if (node.setCheckpoint) {
       this.state.flags.mainline_checkpoint = node.setCheckpoint;
     }
+    if (node.effects) this.applyEffects(node.effects);
     if (node.flags) this.applyFlags(node.flags);
 
     if (node.type === 'route_return') {
@@ -211,6 +212,7 @@ class GameUI {
     this.els.overlayBtn.addEventListener('click', () => this.onOverlayClose());
     document.getElementById('btn-reset').addEventListener('click', () => this.onReset());
     document.getElementById('btn-new').addEventListener('click', () => this.onReset());
+    document.getElementById('btn-export').addEventListener('click', () => this.onExportPlaytest());
 
     document.addEventListener('keydown', (e) => this.onKeydown(e));
   }
@@ -223,7 +225,7 @@ class GameUI {
       this.engine = new StoryEngine(data);
       this.els.gameTitle.textContent = data.meta.title;
       this.els.titleSubtitle.textContent =
-        '纯文字冒险 Demo · 序章 + 第一章 + Vic 分线';
+        '纯文字冒险 Demo · 序章 + 第一章 + Vic 分线 + 第二章达拉维';
       this.els.loadError.hidden = true;
       this.els.btnContinue.hidden = !this.engine.hasSave();
       this.els.titleScreen.hidden = false;
@@ -487,6 +489,65 @@ class GameUI {
     this.render(this.engine.reset(), { forceLog: true });
     this.setStatus('已重置');
     this.els.btnContinue.hidden = false;
+  }
+
+  buildPlaytestExport() {
+    const state = this.engine?.state;
+    const node = this.currentNode;
+    const variables = state?.variables || {};
+    const flags = state?.flags || {};
+    const activeFlags = Object.entries(flags)
+      .filter(([, value]) => value !== false && value !== null && value !== undefined)
+      .map(([key, value]) => `  - ${key}: ${value}`)
+      .join('\n') || '  - none';
+    const choices = this.history
+      .filter((entry) => entry.kind === 'player')
+      .map((entry) => `  - ${entry.text.replace(/^➤\s*/, '')}`)
+      .join('\n') || '  - none';
+
+    return `# Playtest Export
+
+## Basic Info
+
+- Story version: ${this.engine?.data?.meta?.version || 'unknown'}
+- Exported at: ${new Date().toISOString()}
+- Current node: ${state?.nodeId || 'unknown'}
+- Current node type: ${node?.type || 'unknown'}
+- Chapter: ${node?.chapter ?? 'unknown'}
+- Scene: ${node?.scene || 'unknown'}
+
+## Affection
+
+- Vic: ${variables.vic_affection ?? 0}
+- Rupesh: ${variables.rupesh_affection ?? 0}
+- Kabir: ${variables.kabir_affection ?? 0}
+- Ananda: ${variables.ananda_affection ?? 0}
+
+## Active Flags
+
+${activeFlags}
+
+## Major Choices
+
+${choices}
+
+## Current Text
+
+${node?.text || ''}
+`;
+  }
+
+  async onExportPlaytest() {
+    const text = this.buildPlaytestExport();
+    try {
+      await navigator.clipboard.writeText(text);
+      this.showToast('试玩状态已复制');
+      this.setStatus('试玩状态已复制，可直接粘贴给 Codex');
+    } catch {
+      console.log(text);
+      this.showToast('复制失败，已输出到控制台');
+      this.setStatus('复制失败，请打开控制台复制 Playtest Export');
+    }
   }
 
   onKeydown(e) {
